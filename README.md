@@ -1,17 +1,12 @@
-CowGreeting, RGlusic's cowsay on sterioids.
-Features
+
+# CowGreeting, RGlusic's cowsay on sterioids.
+Features:
 Friendly greetings based on time of day (morning, afternoon, evening)
-
 Personalized with your system username
-
 Customizable date and time formats
-
 Optional time display (12-hour or 24-hour)
-
 Cross-shell compatible (bash, zsh)
-
 Configurable via a simple .greetcow.conf file
-
 Works great in .bashrc, .zshrc, or on login
 
 🛠 Installation
