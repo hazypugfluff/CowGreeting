@@ -13,7 +13,7 @@ Works great in .bashrc, .zshrc, or on login
 1. Manual Installation
 Clone the repo and install the script:
 
-git clone https://github.com/yourusername/greetcow.git
+git clone [https://github.com/yourusername/greetcow.git](https://github.com/hazypugfluff/CowGreeting)
 
 cd greetcow
 
