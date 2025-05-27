@@ -22,9 +22,11 @@ chmod +x greetcow.sh
 sudo cp greetcow.sh /usr/local/bin/greetcow
 
 Or place it anywhere in your PATH.
+
 2. Configuration
 Create a .greetcow.conf in the same directory as the script or in your home folder. Here's an example config:
 # .greetcow.conf
+
 date_format=%Y-%m-%d
 
 time_format=%H:%M
