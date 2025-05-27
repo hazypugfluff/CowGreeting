@@ -7,6 +7,11 @@ SCRIPT_DIR=$(dirname "$0")
 CONFIG_FILE="$SCRIPT_DIR/greetcow.conf"
 [ -f "$CONFIG_FILE" ] && . "$CONFIG_FILE"
 
+
+# Plugin path
+PLUGIN_PATH="$PLUGIN_DIR"
+
+
 # Defaults if not set in config
 SHOW_TIME=${SHOW_TIME:-true}
 TIME_FORMAT_24HR=${TIME_FORMAT_24HR:-true}
@@ -28,6 +33,8 @@ elif [ "$HOUR" -lt 18 ]; then
 else
     TIMEOFDAY="evening"
 fi
+
+
 
 # Get username
 USER=$(whoami)
@@ -70,6 +77,49 @@ GREETING=$(printf "%s\n" "$GREETING_TEMPLATE" \
     | sed "s/TIMEOFDAY/$TIMEOFDAY/" \
     | sed "s/USER/$USER/" \
     | sed "s/DATESTR/$DATESTR/")
+
+# --------------------------------------------------
+
+
+# Plugin Logic
+if [ "$DISABLE_PLUGINS" != "true" ] && [ -d "$PLUGIN_PATH" ]; then
+    for plugin in "$PLUGIN_PATH"/*; do
+        plugin_name=$(basename "$plugin")
+
+        if [ -n "$PLUGINS" ]; then
+            case " $PLUGINS " in
+                *" $plugin_name "*) ;;  # plugin is in whitelist, continue
+                *) continue ;;          # plugin not in whitelist, skip
+            esac
+        fi
+
+        if [ -x "$plugin" ]; then
+            plugin_output="$("$plugin" 2>&1)"
+            exit_code=$?
+
+            if [ $exit_code -eq 0 ]; then
+                GREETING="$GREETING 
+		$plugin_output"
+            else
+                if [ "$SILENT" != "true" ]; then
+                    GREETING="$GREETING
+		    [Plugin Error: $plugin_name exited with code $exit_code]"
+                    GREETING="$GREETING
+		    $plugin_output"
+                fi
+            fi
+        else
+            if [ "$SILENT" != "true" ]; then
+                GREETING="$GREETING
+		[Plugin Skipped: $plugin_name is not executable]"
+            fi
+        fi
+    done
+elif [ "$DISABLE_PLUGINS" != "true" ] && [ "$SILENT" != "true" ]; then
+    GREETING="$GREETING
+    [Plugin directory not found: $PLUGIN_PATH]"
+fi
+
 
 # Output with cowsay
 cowsay "$GREETING"
