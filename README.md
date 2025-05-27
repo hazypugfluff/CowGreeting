@@ -9,6 +9,8 @@ Cross-shell compatible (bash, zsh)
 Configurable via a simple .greetcow.conf file
 Works great in .bashrc, .zshrc, or on login
 
+# Now with ✨ Plugins! ✨
+
 🛠 Installation
 1. Manual Installation
 Clone the repo and install the script:
