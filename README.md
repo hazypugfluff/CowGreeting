@@ -39,16 +39,6 @@ time_12hr=false
 
 timezone=local
 
-date_format: Any valid date format string
-
-time_format: Optional, if show_time=true
-
-show_time: Whether to display the time
-
-time_12hr: Use 12-hour time format (true/false)
-
-timezone: Currently defaults to system local time
-
 If no config is found, it will use sensible defaults.
 
 # Reqirements:
