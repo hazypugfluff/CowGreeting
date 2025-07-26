@@ -1,5 +1,5 @@
 
-# CowGreeting, RGlusic's cowsay on sterioids.
+# CowGreeting, RGlusic's hello on sterioids.
 Features:
 Friendly greetings based on time of day (morning, afternoon, evening)
 Personalized with your system username
