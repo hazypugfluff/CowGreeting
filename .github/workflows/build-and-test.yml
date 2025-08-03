@@ -1,0 +1,185 @@
+name: Build and Test Debian Package
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          debhelper \
+          devscripts \
+          cowsay \
+          lintian
+          
+    - name: Build Debian package
+      run: |
+        echo "Building .deb package..."
+        debuild -b -us -uc
+        ls -la ../*.deb
+        
+    - name: Verify package contents
+      run: |
+        echo "Verifying package contents..."
+        dpkg -c ../cowgreeting_*.deb
+        
+    - name: Install package
+      run: |
+        echo "Installing the package..."
+        sudo dpkg -i ../cowgreeting_*.deb
+        
+    - name: Verify installation
+      run: |
+        echo "Checking package installation..."
+        dpkg -l | grep cowgreeting
+        dpkg -s cowgreeting
+        
+    - name: Test basic functionality
+      run: |
+        echo "Testing cowgreeting command..."
+        cowgreeting
+        echo ""
+        echo "Testing greetcow alternative command..."
+        greetcow
+        
+    - name: Test command availability
+      run: |
+        echo "Verifying commands are in PATH..."
+        which cowgreeting
+        which greetcow
+        ls -la /usr/bin/cowgreeting /usr/bin/greetcow
+        
+    - name: Test plugin directory auto-creation
+      run: |
+        echo "Testing plugin directory auto-creation..."
+        # Remove any existing config
+        rm -rf ~/.config/cowgreeting
+        # Run cowgreeting to trigger auto-creation
+        cowgreeting > /dev/null
+        # Verify directory was created
+        ls -la ~/.config/cowgreeting/
+        ls -la ~/.config/cowgreeting/plugins/
+        
+    - name: Test custom plugin functionality
+      run: |
+        echo "Testing custom plugin functionality..."
+        # Create a test plugin
+        cat > ~/.config/cowgreeting/plugins/test-plugin.sh << 'EOF'
+        #!/bin/bash
+        echo "🧪 Test plugin working!"
+        exit 0
+        EOF
+        chmod +x ~/.config/cowgreeting/plugins/test-plugin.sh
+        
+        # Test that plugin is executed
+        output=$(cowgreeting)
+        echo "$output"
+        if echo "$output" | grep -q "🧪 Test plugin working!"; then
+          echo "✅ Custom plugin test passed!"
+        else
+          echo "❌ Custom plugin test failed!"
+          exit 1
+        fi
+        
+    - name: Test configuration file
+      run: |
+        echo "Testing configuration file functionality..."
+        # Create a custom config
+        mkdir -p ~/.config/cowgreeting
+        cat > ~/.config/cowgreeting/greetcow.conf << 'EOF'
+        TIME_FORMAT_24HR=true
+        TIME_FORMAT_24HR_FORMAT="%H:%M:%S"
+        SHOW_DATE=true
+        DATE_FORMAT="%A, %B %d, %Y"
+        GREETING_TEMPLATE="Hello USER! Today is DATESTR and the time is now."
+        EOF
+        
+        # Test with custom config
+        output=$(cowgreeting)
+        echo "$output"
+        if echo "$output" | grep -q "Hello.*Today is"; then
+          echo "✅ Custom configuration test passed!"
+        else
+          echo "❌ Custom configuration test failed!"
+          exit 1
+        fi
+        
+    - name: Test error handling
+      run: |
+        echo "Testing error handling with broken plugin..."
+        # Create a broken plugin
+        cat > ~/.config/cowgreeting/plugins/broken-plugin.sh << 'EOF'
+        #!/bin/bash
+        echo "This plugin will fail"
+        exit 1
+        EOF
+        chmod +x ~/.config/cowgreeting/plugins/broken-plugin.sh
+        
+        # Test that cowgreeting still works with broken plugin
+        output=$(cowgreeting)
+        echo "$output"
+        if echo "$output" | grep -q "Plugin Error"; then
+          echo "✅ Error handling test passed!"
+        else
+          echo "❌ Error handling test failed!"
+          exit 1
+        fi
+        
+    - name: Test timezone functionality
+      run: |
+        echo "Testing timezone functionality..."
+        # Test with different timezone
+        cat > ~/.config/cowgreeting/greetcow.conf << 'EOF'
+        TIMEZONE="UTC"
+        SHOW_TIME=true
+        TIME_FORMAT_24HR=true
+        SHOW_DATE=true
+        EOF
+        
+        output=$(cowgreeting)
+        echo "$output"
+        echo "✅ Timezone test completed!"
+        
+    - name: Test uninstallation
+      run: |
+        echo "Testing package removal..."
+        sudo dpkg -r cowgreeting
+        
+        # Verify commands are no longer available
+        if command -v cowgreeting &> /dev/null; then
+          echo "❌ cowgreeting command still available after removal!"
+          exit 1
+        fi
+        
+        if command -v greetcow &> /dev/null; then
+          echo "❌ greetcow command still available after removal!"
+          exit 1
+        fi
+        
+        echo "✅ Package removal test passed!"
+        
+    - name: Upload package artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: cowgreeting-deb-package
+        path: ../cowgreeting_*.deb
+        retention-days: 30
+        
+    - name: Test package info
+      run: |
+        echo "Package information:"
+        file ../cowgreeting_*.deb
+        du -h ../cowgreeting_*.deb 

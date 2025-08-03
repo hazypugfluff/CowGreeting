@@ -1,0 +1,26 @@
+# Debian package build artifacts
+debian/.debhelper/
+debian/cowgreeting/
+debian/debhelper-build-stamp
+debian/files
+
+# Build outputs
+../*.deb
+../*.buildinfo
+../*.changes
+../*.build
+
+# Temporary files
+*~
+*.swp
+*.swo
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Test artifacts
+test-output/
+*.log 
