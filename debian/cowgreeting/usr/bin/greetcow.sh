@@ -3,9 +3,14 @@
 # Get the directory of the script
 SCRIPT_DIR=$(dirname "$0")
 
-# Load config if available
+# Load config if available - check multiple locations
+# 1. Same directory as script (legacy)
 CONFIG_FILE="$SCRIPT_DIR/greetcow.conf"
 [ -f "$CONFIG_FILE" ] && . "$CONFIG_FILE"
+
+# 2. User config directory (preferred)
+USER_CONFIG_FILE="$HOME/.config/cowgreeting/greetcow.conf"
+[ -f "$USER_CONFIG_FILE" ] && . "$USER_CONFIG_FILE"
 
 
 # Plugin path - auto-create user config directory

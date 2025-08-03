@@ -68,6 +68,7 @@ fi
 
 echo "⚙️ Step 8: Testing custom configuration..."
 cat > ~/.config/cowgreeting/greetcow.conf << 'EOF'
+SHOW_TIME=true
 TIME_FORMAT_24HR=true
 SHOW_DATE=true
 GREETING_TEMPLATE="Test greeting for USER at DATESTR"
@@ -78,6 +79,7 @@ if echo "$output" | grep -q "Test greeting"; then
     echo "✅ Custom configuration test passed!"
 else
     echo "❌ Custom configuration test failed!"
+    echo "Output was: $output"
     exit 1
 fi
 

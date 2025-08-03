@@ -52,7 +52,11 @@ sudo cp greetcow.sh /usr/local/bin/greetcow
 Or place it anywhere in your PATH.
 
 ## 3. Configuration
-Create a .greetcow.conf in the same directory as the script or in your home folder. Here's an example config:
+CowGreeting looks for configuration files in two locations (in order of priority):
+1. `~/.config/cowgreeting/greetcow.conf` (recommended)
+2. Same directory as the script (legacy)
+
+Here's an example config:
 # .greetcow.conf
 
 date_format=%Y-%m-%d

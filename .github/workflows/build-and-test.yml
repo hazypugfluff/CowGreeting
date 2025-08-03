@@ -100,6 +100,7 @@ jobs:
         # Create a custom config
         mkdir -p ~/.config/cowgreeting
         cat > ~/.config/cowgreeting/greetcow.conf << 'EOF'
+        SHOW_TIME=true
         TIME_FORMAT_24HR=true
         TIME_FORMAT_24HR_FORMAT="%H:%M:%S"
         SHOW_DATE=true
@@ -110,10 +111,13 @@ jobs:
         # Test with custom config
         output=$(cowgreeting)
         echo "$output"
+        echo "Testing for custom greeting template..."
         if echo "$output" | grep -q "Hello.*Today is"; then
           echo "✅ Custom configuration test passed!"
         else
           echo "❌ Custom configuration test failed!"
+          echo "Expected pattern: 'Hello.*Today is'"
+          echo "Actual output: $output"
           exit 1
         fi
         

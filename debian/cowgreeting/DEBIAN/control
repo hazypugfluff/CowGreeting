@@ -2,7 +2,7 @@ Package: cowgreeting
 Version: 1.0.0-1
 Architecture: all
 Maintainer: Kuzai <kerrjoeseph720@gmail.com>
-Installed-Size: 23
+Installed-Size: 24
 Depends: cowsay, bash | dash
 Section: utils
 Priority: optional
