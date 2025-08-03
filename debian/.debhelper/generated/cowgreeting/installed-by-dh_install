@@ -1,4 +1,3 @@
-./greetcow.sh
 ./greetcow.conf
 ./README.md
 ./plugins/hello.sh

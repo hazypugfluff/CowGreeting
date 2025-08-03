@@ -5,8 +5,7 @@ set -e
 # Create system-wide plugin directory examples
 mkdir -p /usr/share/cowgreeting/plugins
 
-# Rename and make the main script executable  
-mv /usr/bin/greetcow.sh /usr/bin/cowgreeting
+# Make the main script executable (already done in packaging, but ensure it's set)
 chmod +x /usr/bin/cowgreeting
 
 # Copy example plugin if it doesn't exist

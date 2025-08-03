@@ -1,4 +1,4 @@
-a08a884549959b7827ed5d0ebddb56fa  usr/bin/greetcow.sh
+a08a884549959b7827ed5d0ebddb56fa  usr/bin/cowgreeting
 08c90f92260bb670102937d985431c7a  usr/share/cowgreeting/greetcow.conf
 1f78fc20b9fa3e53663b666d5967741f  usr/share/cowgreeting/plugins/hello.sh
 ab015477fa5faca7d1a8a5b40fb8183e  usr/share/doc/cowgreeting/README.md

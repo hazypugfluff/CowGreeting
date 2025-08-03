@@ -12,5 +12,9 @@ override_dh_auto_test:
 
 override_dh_install:
 	dh_install
+	# Install and rename the main script
+	mkdir -p debian/cowgreeting/usr/bin
+	cp greetcow.sh debian/cowgreeting/usr/bin/cowgreeting
+	chmod +x debian/cowgreeting/usr/bin/cowgreeting
 	# Ensure plugin directory exists in package
 	mkdir -p debian/cowgreeting/usr/share/cowgreeting/plugins 
