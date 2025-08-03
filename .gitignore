@@ -10,6 +10,11 @@ debian/files
 ../*.changes
 ../*.build
 
+# Local copies of built packages
+*.deb
+*.buildinfo
+*.changes
+
 # Temporary files
 *~
 *.swp

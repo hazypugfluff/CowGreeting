@@ -101,12 +101,16 @@ fi
 
 echo "📊 Step 10: Package information..."
 dpkg -s cowgreeting
-file ../cowgreeting_*.deb
-du -h ../cowgreeting_*.deb
+
+# Copy package to current directory for consistency
+cp ../cowgreeting_*.deb ./
+
+file cowgreeting_*.deb
+du -h cowgreeting_*.deb
 
 echo ""
 echo "🎉 All tests passed successfully!"
-echo "✅ Package built: $(ls ../cowgreeting_*.deb)"
+echo "✅ Package built: $(ls cowgreeting_*.deb)"
 echo "✅ Installation working"
 echo "✅ Plugin system working" 
 echo "✅ Configuration system working"

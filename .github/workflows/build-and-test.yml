@@ -29,6 +29,7 @@ jobs:
       run: |
         echo "Building .deb package..."
         debuild -b -us -uc
+        echo "Built packages:"
         ls -la ../*.deb
         
     - name: Verify package contents
@@ -175,15 +176,21 @@ jobs:
         
         echo "✅ Package removal test passed!"
         
+    - name: Prepare artifacts
+      run: |
+        echo "Copying built packages to workspace..."
+        cp ../cowgreeting_*.deb ./
+        ls -la *.deb
+        
     - name: Upload package artifact
       uses: actions/upload-artifact@v4
       with:
         name: cowgreeting-deb-package
-        path: ../cowgreeting_*.deb
+        path: cowgreeting_*.deb
         retention-days: 30
         
     - name: Test package info
       run: |
         echo "Package information:"
-        file ../cowgreeting_*.deb
-        du -h ../cowgreeting_*.deb 
+        file cowgreeting_*.deb
+        du -h cowgreeting_*.deb 

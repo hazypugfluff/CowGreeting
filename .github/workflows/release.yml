@@ -48,19 +48,21 @@ jobs:
         debuild -b -us -uc
         ls -la ../*.deb
         
-    - name: Rename package with version
+    - name: Prepare and rename package
       run: |
         VERSION="${{ steps.version.outputs.version }}"
         if [ "$VERSION" != "dev" ]; then
           mv ../cowgreeting_*.deb ../cowgreeting_${VERSION}_all.deb
         fi
-        ls -la ../*.deb
+        # Copy to workspace for artifact upload
+        cp ../cowgreeting_*.deb ./
+        ls -la *.deb
         
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: ../cowgreeting_*.deb
+        files: cowgreeting_*.deb
         body: |
           ## CowGreeting Release ${{ steps.version.outputs.tag }}
           
@@ -97,5 +99,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: cowgreeting-deb-development
-        path: ../cowgreeting_*.deb
+        path: cowgreeting_*.deb
         retention-days: 7 
