@@ -1,0 +1,6 @@
+0776905bd1fd3ee2e84acec823120265  usr/bin/greetcow.sh
+08c90f92260bb670102937d985431c7a  usr/share/cowgreeting/greetcow.conf
+1f78fc20b9fa3e53663b666d5967741f  usr/share/cowgreeting/plugins/hello.sh
+87f7f1053a0c98db897e65f1b3b512be  usr/share/doc/cowgreeting/README.md
+dc9f2cb42ccd3d01788d94b77fc6f401  usr/share/doc/cowgreeting/changelog.Debian.gz
+834fbaff58b7635b95d93b9a9fd71fef  usr/share/doc/cowgreeting/copyright

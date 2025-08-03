@@ -1,0 +1,11 @@
+cowgreeting (1.0.0-1) unstable; urgency=medium
+
+  * Initial release of CowGreeting
+  * Enhanced time-aware greeting system with cowsay
+  * Plugin system for extensibility
+  * Auto-creates ~/.config/cowgreeting/plugins directory
+  * Configurable date/time formats and timezone support
+  * Cross-shell compatibility (bash, zsh)
+  * Package includes cowsay dependency
+
+ -- Kuzai Kuzai <kerrjoeseph720@gmail.com>  Sat, 02 Aug 2025 17:49:00 -0800 

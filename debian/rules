@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# No build needed for shell script
+
+override_dh_auto_test:
+	# Basic syntax check
+	bash -n greetcow.sh
+
+override_dh_install:
+	dh_install
+	# Ensure plugin directory exists in package
+	mkdir -p debian/cowgreeting/usr/share/cowgreeting/plugins 

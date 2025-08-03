@@ -1,0 +1,4 @@
+greetcow.sh usr/bin/
+greetcow.conf usr/share/cowgreeting/
+README.md usr/share/doc/cowgreeting/
+plugins/* usr/share/cowgreeting/plugins/ 

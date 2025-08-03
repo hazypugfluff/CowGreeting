@@ -1,0 +1,22 @@
+Package: cowgreeting
+Version: 1.0.0-1
+Architecture: all
+Maintainer: Kuzai <kerrjoeseph720@gmail.com>
+Installed-Size: 23
+Depends: cowsay, bash | dash
+Section: utils
+Priority: optional
+Homepage: https://github.com/hazypugfluff/CowGreeting
+Description: Enhanced time-aware greeting system with cowsay
+ CowGreeting is cowhello on steroids - an enhanced shell script
+ that provides personalized, time-aware greetings using the cowsay utility.
+ .
+ Features:
+  * Time-aware greetings (morning/afternoon/evening)
+  * Personalized with system username
+  * Customizable date and time formats
+  * Plugin system for extensibility
+  * Cross-shell compatible (bash, zsh)
+  * Configurable via ~/.config/cowgreeting/greetcow.conf
+ .
+ Perfect for adding personality to your shell login or .bashrc/.zshrc files.

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+# Create system-wide plugin directory examples
+mkdir -p /usr/share/cowgreeting/plugins
+
+# Rename and make the main script executable  
+mv /usr/bin/greetcow.sh /usr/bin/cowgreeting
+chmod +x /usr/bin/cowgreeting
+
+# Copy example plugin if it doesn't exist
+if [ ! -f "/usr/share/cowgreeting/plugins/hello.sh" ]; then
+    cat > /usr/share/cowgreeting/plugins/hello.sh << 'EOF'
+#!/bin/bash
+echo "🌄 Hello from the plugin system!"
+exit 0
+EOF
+    chmod +x /usr/share/cowgreeting/plugins/hello.sh
+fi
+
+# Update alternatives to make cowgreeting available as 'greetcow' too
+update-alternatives --install /usr/bin/greetcow greetcow /usr/bin/cowgreeting 100
+
+#DEBHELPER#
+
+exit 0 
