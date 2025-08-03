@@ -11,6 +11,8 @@ Works great in .bashrc, .zshrc, or on login
 
 # Now with ✨ Plugins! ✨
 
+Plugins are automatically stored in `~/.config/cowgreeting/plugins/` and the directory is created on first run.
+
 🛠 Installation
 1. Manual Installation
 Clone the repo and install the script:

@@ -8,8 +8,14 @@ CONFIG_FILE="$SCRIPT_DIR/greetcow.conf"
 [ -f "$CONFIG_FILE" ] && . "$CONFIG_FILE"
 
 
-# Plugin path
-PLUGIN_PATH="$PLUGIN_DIR"
+# Plugin path - auto-create user config directory
+DEFAULT_PLUGIN_DIR="$HOME/.config/cowgreeting/plugins"
+PLUGIN_PATH="${PLUGIN_DIR:-$DEFAULT_PLUGIN_DIR}"
+
+# Auto-create plugin directory if it doesn't exist
+if [ ! -d "$PLUGIN_PATH" ]; then
+    mkdir -p "$PLUGIN_PATH"
+fi
 
 
 # Defaults if not set in config
